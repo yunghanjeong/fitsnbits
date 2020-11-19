@@ -20,3 +20,4 @@ def td_get(sym:str, interval:str, size:int, timezone:str):
                               timezone=timezone).as_pandas() 
     except ValueError:
         print("Check Value Formats")
+        
