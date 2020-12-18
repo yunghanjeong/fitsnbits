@@ -10,9 +10,18 @@ FitsnBits is a stock market prediction models that allows the investors to make 
 
 ## ARIMA Selection (ACF and PACF)
 
+![s&p500](https://github.com/yunghanjeong/fitsnbits/blob/main/images/SPY.acf_pacf.png?raw=true)
+
 ## Model
 
 ## Results
+
+### BEST
+![s&p500](https://github.com/yunghanjeong/fitsnbits/blob/main/images/V_prediction.png?raw=true)
+![JPM](https://github.com/yunghanjeong/fitsnbits/blob/main/images/JPM_prediction.png?raw=true)
+![VISA](https://github.com/yunghanjeong/fitsnbits/blob/main/images/SPY_prediction.png?raw=true)
+
+### WORST
 
 ## Repository Structure
 ```
