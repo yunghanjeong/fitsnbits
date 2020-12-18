@@ -15,7 +15,7 @@ FitsnBits is a stock market prediction models that allows the investors to make 
 ## Results
 
 ## Repository Structure
-
+```
 ├── README.md                       # Top-level README
 ├── fitsnbits.ipynb                 # Narrative documentation of the project in Jupyter Notebook
 ├── fitsnbits_presentation.pdf      # PDF version of project presentation
@@ -28,3 +28,4 @@ FitsnBits is a stock market prediction models that allows the investors to make 
 │   └── tdameritrade_api.py         # TD Ameritrade API Calls and data collection
 ├── models                          # Saved models
 └── data                            # Data obtained from TD Ameritrade API Calls
+```
