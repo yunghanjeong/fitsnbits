@@ -14,7 +14,7 @@ sys.path.append('../')
 
 
 #API Keys
-file = open("../tdam_secret.json")
+file = open("../tdam_secret.json") # REPLACE YOUR API KEY HERE
 keys = json.load(file)["key"]
 
 
