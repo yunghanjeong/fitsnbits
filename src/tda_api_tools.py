@@ -9,7 +9,7 @@ import pandas as pd
 import json
 import os
 import sys
-from datetime import datetime
+import datetime
 sys.path.append('../')
 
 
@@ -44,12 +44,8 @@ def get_price_history(symbol:str, **kwargs) -> str:
             payload[key] = values
         # get requests
         content = requests.get(url=base_url, params=payload) #get item content
-        
-        if content.json()["empty"]:
-            print("Empty Response")
-            return pd.DataFrame()
-        else:
-            return apiout_to_df(content.json())
+    
+        return apiout_to_df(content.json())
     except ValueError:
         print("Check Value Formats")
         
@@ -73,37 +69,7 @@ def datetime_to_unix(time:str):
 def apiout_to_df(apiout:dict)->pd.DataFrame:
     out_df = pd.DataFrame(apiout["candles"])
     out_df["to_datetime"] = out_df.datetime.apply(lambda x: int(str(x)[:-3]))
-    out_df.to_datetime = out_df.to_datetime.apply(lambda x: datetime.fromtimestamp(x).strftime("%Y-%m-%d %H:%M:%S.%f"))
-    out_df.datetime = out_df.to_datetime
-    out_df.index = pd.DatetimeIndex(out_df.datetime)
+    out_df.to_datetime = out_df.to_datetime.apply(lambda x: datetime.datetime.fromtimestamp(x).strftime("%Y-%m-%d %H:%M:%S.%f"))
+    out_df.index = out_df.to_datetime
     out_df.drop(["datetime", "to_datetime"], inplace=True, axis=1)
     return out_df
-
-def get_latest_history(symbol, frequency=1, frequencyType="minute"): 
-    end = datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f") # end date of the data collection 
-    import_df = get_price_history(symbol,
-                      period=1, 
-                      periodType="day",
-                      frequency=5,
-                      frequencyType="minute",
-                      endDate=end)
-    output_df = pd.DataFrame()
-
-    while len(import_df.index) > 1:
-        print("importing from ", end)
-        import_df = get_price_history(symbol, 
-                          frequency=frequency,
-                          frequencyType=frequencyType, 
-                          endDate=end)
-        if len(import_df.index) > 0:
-            end = import_df.index[0]
-            output_df = pd.concat([import_df, output_df])
-            print("sucessfully imported on ", end)
-        else:
-            print("check last import date")
-            break
-
-    print(f"Imported Data from {symbol}")
-    print("from {}".format(output_df.index[0]))
-    print("to {}".format(output_df.index[-1]))
-    return output_df
