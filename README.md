@@ -1,4 +1,4 @@
-# FitsnBit
+# FitsnBits
 ![banner](https://github.com/yunghanjeong/fitsnbits/blob/main/images/banner_fidelity.png?raw=true)
 FitsnBits is a stock market prediction models that allows the investors to make a data driven decisions by simplifying time series analysis process. A recent article by LPL Financial on [Websteronline](https://public.websteronline.com/articles/investments-insights/how-different-generations-invest) demonstrated the stark difference in new and young investors compared to established older generation. The young investors tends to rely on individual research intuition and invest with shorter goals in mind, but older investors relied on professional advisors and brokers to grow their portfolio. This investment pattern was also confirmed by [Wall Street Journal](https://www.wsj.com/articles/the-baby-boomer-vs-millennial-investment-smackdown-11559813581) where young investors are more likely to invest in emerging companies and IPOs to boos their porfolio. 
 
@@ -50,16 +50,17 @@ Overall, all prediction made in this project yielded more than satisfactory resu
 
 ## Repository Structure
 ```
-├── README.md                       # Top-level README
-├── fitsnbits.ipynb                 # Narrative documentation of the project in Jupyter Notebook
-├── fitsnbits_presentation.pdf      # PDF version of project presentation
-├── src                             # Contains custom python modules
-│   └── tda_api_tools.py            # Query tool for TD Ameritrade
-├── images                          # All visualization and images of the project
-├── notebooks                       # Noteboooks used to build the project
-│   └── tdameritrade_api.py         # TD Ameritrade API Calls and data collection
-│   └── spy_stocks_eda.py           # EDA of collected data
-│   └── tdameritrade_api.py         # TD Ameritrade API Calls and data collection
-├── models                          # Saved models
-└── data                            # Data obtained from TD Ameritrade API Calls
+├── README.md                           # Top-level README
+├── fitsnbits.ipynb                     # Narrative documentation of the project in Jupyter Notebook
+├── fitsnbits_presentation.pdf          # PDF version of project presentation
+├── src                                 # Contains custom python modules
+│   └── tda_api_tools.py                # Query tool for TD Ameritrade
+├── images                              # All visualization and images of the project
+├── notebooks                           # Noteboooks used to build the project
+│   └── tdameritrade_api.ipynb          # TD Ameritrade API Calls and data collection
+│   └── spy_stocks_eda.ipynb            # EDA of collected data
+│   └── tdameritrade_api.ipynb          # TD Ameritrade API Calls and data collection
+│   └── arima_eda_class.ipynb           # ARIMA Builder OOP Notebook
+├── models                              # Saved models
+└── data                                # Data obtained from TD Ameritrade API Calls
 ```
