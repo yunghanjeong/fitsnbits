@@ -7,9 +7,11 @@ Created on Sat Jan  2 19:34:37 2021
 import pandas as pd
 import numpy as np
 from statsmodels.tsa.stattools import acf, pacf
+from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
 from statsmodels.tsa.statespace.sarimax import SARIMAX
 from statsmodels.tsa.stattools import adfuller
 from sklearn.metrics import mean_squared_error
+import matplotlib.pyplot as plt
 
 
 
@@ -136,7 +138,7 @@ class arima_tools():
                 break
         return i
         
-    def get_pacf_lag(self, data, columns:list=["close"], nlags=20):
+    def pacf_order(self, data, columns:list=["close"], nlags=20, plot=False):
         """
         This function returns a dataframe output_df with specified col and its moving averages per specified by days_list
         
@@ -157,22 +159,109 @@ class arima_tools():
         for col in columns: # for specified columns
             # PACF significance and Results
             pacf_sig = 2/np.sqrt(len(data[col]))
-            pacf_results = pacf(data[col], nlags=20)
+            pacf_results = pacf(data[col], nlags=nlags)
             pacf_df = pd.DataFrame(pacf_results) 
             pacf_df.columns = ["sig"]
     
             # Differencing the significance to create keys for sorting by largest lag change
             pacf_df_diff = abs(pacf_df.sig.diff())
-            pacf_df_diff.name = "sig_diff"
+            pacf_df_diff.sort_values(ascending=False, inplace=True)
+            sig_lag = pacf_df_diff.index[0] #since the lag we want is in order (integer order)
     
-            # combine PACF results and differencing
-            pacf_df = pd.concat([pacf_df, pacf_df_diff], axis=1)
-            # filter out any data not shown significant
-            pacf_df = pacf_df[abs(pacf_df.sig) > pacf_sig]
-            # sort by the largest lag change
-            pacf_df.sort_values(by="sig_diff", ascending=False, inplace=True)
-            
-            #store lag_list
-            lag_list.append(pacf_df.index[0])
+            if pacf_df.sig[sig_lag-1] > pacf_sig:
+                #store lag_list
+                lag_list.append(sig_lag)
+        if plot:
+            for col in columns:
+                plot_title = "ACF and PACF"
+                fig, ax = plt.subplots(1,2, figsize=(12,8))
+                plot_acf(data[col].values, ax=ax[0], alpha=0.05);
+                plot_pacf(data[col], ax=ax[1], alpha=0.05);
+                fig.suptitle(plot_title, size=18)
+                
        #return a dataframe of results     
         return dict(zip(columns, lag_list))
+    
+    def ts_tts(self, data, ntrain=230, ntest=20, nholdout=5):
+        """
+        Convenient splitter for timeseries testing
+
+        Parameters
+        ----------
+        data : TYPE
+            DESCRIPTION.
+        ntrain : TYPE, optional
+            DESCRIPTION. The default is 230.
+        ntest : TYPE, optional
+            DESCRIPTION. The default is 20.
+        nholdout : TYPE, optional
+            DESCRIPTION. The default is 5.
+
+        Returns
+        -------
+        TYPE
+            DESCRIPTION.
+        TYPE
+            DESCRIPTION.
+        TYPE
+            DESCRIPTION.
+
+        """
+        return data[-ntrain:-ntest], data[-ntest:-nholdout], data[-nholdout:]
+    
+    def month_breakdown_grid(self, input_df, name, savepath="", n_rows=4, n_cols=3, figsize=(24, 24)):
+        total = n_rows * n_cols
+        year = input_df.index[0].year
+    
+        fig, ax = plt.subplots(n_rows, n_cols, figsize=figsize)
+    
+        for i in range(total): #for loop to iterate viz
+            # ========= format visualization position =====
+            startmonth,  endmonth = i+1, i+2
+            rows, cols = i//n_cols, i%n_cols
+    
+            # ================= format date ===============
+            if startmonth < 10:
+                startmonth = "".join(["0", str(startmonth)])
+            else:
+                startmonth = str(startmonth)
+    
+            if endmonth < 10:
+                endmonth = "".join(["0", str(endmonth)])
+            else:
+                endmonth = str(endmonth)
+    
+            start = "-".join([str(year), startmonth, "01"])
+            end = "-".join([str(year), endmonth, "01"])
+    
+            # ============== parse data =================
+            if i < 11:
+                current_plot_df = input_df[(input_df.index > start) & (input_df.index < end)]
+            else:
+                current_plot_df = input_df[input_df.index > start]
+    
+            # ============== plotting =================
+            for col in current_plot_df.columns:
+                # graph items
+                xticks = [current_plot_df.index[0], current_plot_df.index[-1]]
+                xlabels = [str(date)[:10] for date in xticks]
+                axtitle = "{} Prices".format(xlabels[0][:7])
+    
+                # plot
+                ax[rows][cols].plot(current_plot_df[col], label=col)
+    
+                # more concise x axis
+                ax[rows][cols].set_xticks(xticks)
+                ax[rows][cols].set_xticklabels(xlabels)
+                # add ax title
+                ax[rows][cols].set_title(axtitle)
+                ax[rows][cols].legend()
+    
+            fig.suptitle(f"{name} {year} Price Per Month", size=18, y=0.92)
+        if len(savepath):
+            plt.savefig(savepath)
+        plt.show()
+        return fig, ax
+    
+    def rmse(true, input_series):
+        return np.sqrt(mean_squared_error(true, input_series))
