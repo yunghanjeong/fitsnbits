@@ -209,7 +209,10 @@ class arima_tools():
         """
         return data[-ntrain:-ntest], data[-ntest:-nholdout], data[-nholdout:]
     
-    def month_breakdown_grid(self, input_df, name, savepath="", n_rows=4, n_cols=3, figsize=(24, 24)):
+    def month_breakdown_grid(self, input_df, name, savepath="", n_rows=4, n_cols=3, figsize=(24, 24), crossover=True):
+        if crossover:
+            input_df = self.crossovers(input_df)
+        
         total = n_rows * n_cols
         year = input_df.index[0].year
     
@@ -246,16 +249,23 @@ class arima_tools():
                 xticks = [current_plot_df.index[0], current_plot_df.index[-1]]
                 xlabels = [str(date)[:10] for date in xticks]
                 axtitle = "{} Prices".format(xlabels[0][:7])
-    
+                
+                if col == "indicator" and crossover:
+                    true_df = current_plot_df[current_plot_df.indicator == True].close
+                    ax[rows][cols].scatter(x=true_df.index, y=true_df.values, label="cross-overs", marker="d", color="red")
+                else:
                 # plot
-                ax[rows][cols].plot(current_plot_df[col], label=col)
+                    ax[rows][cols].plot(current_plot_df[col], label=col)
     
                 # more concise x axis
                 ax[rows][cols].set_xticks(xticks)
                 ax[rows][cols].set_xticklabels(xlabels)
                 # add ax title
                 ax[rows][cols].set_title(axtitle)
-                ax[rows][cols].legend()
+                ax[rows][cols].legend(bbox_to_anchor=(0, -0.01, 1, -.05),
+                                      loc="upper left",
+                                      ncol=3,
+                                      mode="expand")
     
             fig.suptitle(f"{name} {year} Price Per Month", size=18, y=0.92)
         if len(savepath):
@@ -263,5 +273,24 @@ class arima_tools():
         plt.show()
         return fig, ax
     
-    def rmse(true, input_series):
+    def rmse(self, true, input_series):
         return np.sqrt(mean_squared_error(true, input_series))
+    
+    def crossovers(self, input_df):
+        start_df = []
+
+        for i in range(len(input_df)):
+            close = input_df.iloc[i,:].close 
+            max_val = input_df.iloc[i,:].values.max()
+            if close < max_val:
+                 start_df.append(input_df.iloc[i,:].name)
+        
+        start_df = pd.DataFrame(start_df)
+        
+        start_df["indicator"] = start_df[0].apply(lambda x: True)
+        start_df["datetime"]= start_df[0]
+        start_df.index = start_df.datetime
+        start_df.drop(columns=[0, "datetime"], inplace=True)
+        
+        start_df = pd.concat([input_df, start_df], axis=1)
+        return start_df

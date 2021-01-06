@@ -1,14 +1,56 @@
 # FitsnBits
 ![banner](https://github.com/yunghanjeong/fitsnbits/blob/main/images/banner_fidelity.png?raw=true)
-FitsnBits is a stock market prediction models that allows the investors to make a data driven decisions by simplifying time series analysis process. A recent article by LPL Financial on [Websteronline](https://public.websteronline.com/articles/investments-insights/how-different-generations-invest) demonstrated the stark difference in new and young investors compared to established older generation. The young investors tends to rely on individual research intuition and invest with shorter goals in mind, but older investors relied on professional advisors and brokers to grow their portfolio. This investment pattern was also confirmed by [Wall Street Journal](https://www.wsj.com/articles/the-baby-boomer-vs-millennial-investment-smackdown-11559813581) where young investors are more likely to invest in emerging companies and IPOs to boos their porfolio. 
+Fitsnbits is a stock position potential indicator that provide insight to current stock behavior. By u
 
-There is a clear market gap between providing a reliable and economical financial quantitative tool for younger and emerging indepedent investors. This project aims to provide a simple and efficient stock market analysis through streamlined ARIMA modeling for daily stock prices to forecast the next 5 days of stock prices. An accurate prediction from this model will allow each investors to predict their positions and accounts accordingly. 
+1. it takes data from td ameritrade api
+2. it calculates bunch of stuff to determine arima
+3. it also calculates moving average
+4. predict closing and ma's with arima 
+5. see how closing price and ma trend are and see if they converge
+
+
+
+prediction model based on ARIMA based time series modeling based on [TD Ameritrade API](https://developer.tdameritrade.com/apis) data with [plotly](https://plotly.com/) visualization. Autogressive Integrated Moving Average, ARIMA, model was chosen for its quick statistical based model selection. 
+
+- why prediction is made with arima
+- advantages of arima
+- its performance
+
+## Business Case
+A recent article by LPL Financial on [Websteronline](https://public.websteronline.com/articles/investments-insights/how-different-generations-invest) demonstrated the stark difference in new and young investors compared to established older generation. The young investors tends to rely on individual research intuition and invest with shorter goals in mind, but older investors relied on professional advisors and brokers to grow their portfolio. This investment pattern was also confirmed by [Wall Street Journal](https://www.wsj.com/articles/the-baby-boomer-vs-millennial-investment-smackdown-11559813581) where young investors are more likely to invest in emerging companies and IPOs to boos their porfolio. 
+
+There is a clear market gap between providing a reliable and economical financial quantitative tool for younger and emerging indepedent investors. This project aims to provide a simplified and modular tool set for any indepedent investors who are looking to explore the market individually.
 
 ## Overview
-
-FitsnBits is a stock market prediction models that allows the investors to make a data driven decisions by simplifying time series analysis process. The data for the prediction was collected using [TD Ameritrade API](https://developer.tdameritrade.com/apis) with support of pandas, numpy, and datetime library of Python. S&P500 (SPY) Index and the **Big 10** companies of the index: Apple, Microsoft, Amazon, Facebook, Google (Class A & C), Berkshire Hathaway, Johnson & Johnson, JPMorgan Chase, and Visa was chosen as the focus group of the prototype of this project. It was found that the 11 selected stock prices behaved and trended similarly, which streamlined the EDA And modeling process. For prediction modeling ARIMA was performed on daily closing prices of the selected stock prices with the ARIMA orders being determined by results of partial autocorrelation and gridsearch of each individual stocks with root-mean-squared-error as the error metric. Overall, it was found that AR (2) was the common starting point of the gridsearch hypertuning of all models with all models performing within 3% of %RMSE of their respective stock prices. 
+ The data for the prediction was collected using [TD Ameritrade API](https://developer.tdameritrade.com/apis) with support of pandas, numpy, and datetime library of Python. S&P500 (SPY) Index and the **Big 10** companies of the index: Apple, Microsoft, Amazon, Facebook, Google (Class A & C), Berkshire Hathaway, Johnson & Johnson, JPMorgan Chase, and Visa was chosen as the focus group of the prototype of this project. The **Big 10** companies take up more than quarter of the total index in performance and was found that they behaved and trended similarly to S&P500s. For prediction modeling ARIMA was performed on daily closing prices of the selected stock prices with the ARIMA orders being determined by results of partial autocorrelation and gridsearch of each individual stocks with root-mean-squared-error as the error metric. 
 
 ## Methods
+1. Historic stock quotes were collected from selected companies through TD Ameritrade API between 2018-2020
+2. Moving Average Calculated as additional data
+3. ARIMA order for daily close price were calculated
+    - Augmented Dickey-Fuller
+    - Autocorrelation Partial Autocorrelation
+4. ARIMA model tested
+
+## Data 
+### EDA
+#### Stationarity
+[!]
+
+#### S&P500
+
+#### Big 10
+
+## Model
+### Baseline
+Linear regression?
+
+### ARIMA
+
+### Error
+
+## Results
+<!---
 1. Historic stock quotes were collected from selected companies through TD Ameritrade API between 2018-2020, exclusing the COVID-19 market crash.
 2. The collected data was cleaned and stored as CSV using pandas and datetime libraries.
 3. Autocorrelation and Partial Autocorelation (ACF and PACF) of individual stocks were calculated for base AR order of ARIMA.
@@ -47,7 +89,7 @@ Overall, all prediction made in this project yielded more than satisfactory resu
 - Streamline process for less end-user programming
 - Deploy application or library of final model for ease of use
 - Stabilize the model and include COVID-19 crash. 
-
+--->
 ## Repository Structure
 ```
 ├── README.md                           # Top-level README
