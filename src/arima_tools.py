@@ -182,7 +182,7 @@ class arima_tools():
        #return a dataframe of results     
         return dict(zip(columns, lag_list))
     
-    def ts_tts(self, data, ntrain=230, ntest=20, nholdout=5):
+    def ts_tts(self, data, ntest=20):
         """
         Convenient splitter for timeseries testing
 
@@ -207,7 +207,7 @@ class arima_tools():
             DESCRIPTION.
 
         """
-        return data[-ntrain:-ntest], data[-ntest:-nholdout], data[-nholdout:]
+        return data[:-ntest], data[-ntest:]
     
     def month_breakdown_grid(self, input_df, name, savepath="", n_rows=4, n_cols=3, figsize=(24, 24), crossover=True):
         if crossover:

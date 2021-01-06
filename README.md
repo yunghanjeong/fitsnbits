@@ -13,21 +13,24 @@ There is a clear market gap between providing a reliable and economical financia
 
 ## Methods
 1. Historic stock quotes were collected from selected companies through TD Ameritrade API between 2018-2020
-2. Moving Average Calculated as additional data
+2. Moving Average Calculated as additional indicator
 3. ARIMA order for daily close price were calculated
     - Augmented Dickey-Fuller
     - Autocorrelation Partial Autocorrelation
-4. ARIMA model tested
+4. ARIMA model built and tested
+
 
 ## Data 
 ### EDA
 The collected data from TD Ameritrade API is very clean and free of null values as expected. The data has datetime index with open, close, high, and low prices along with its daily total trade volume. For this analysis only the close prices will be looked at since we assume that a trade strategy would be made in advance. 
 
-For the scope of this EDA the data will be narrowed to only include the trading days from year 2020. There are few highligts in doing so:
+In summary, both all companies chosen for this project behaved similarly in 2020:
 
-- Easily identify seasonality between months
-    - Visual check of seasonality
-- Inclusion of COVID-19 crash 
+- COVID-19 Market crash cause very quick crash in stock values
+ - Moving average crossovers only resulted in resistance due to the crash
+- Recovery turned mostly positive by end of the year
+- Recovery was steady
+ - Moving average crossovers started to signal support
     
 ### 2020 Performance
 
@@ -54,8 +57,24 @@ Moving average crossovers showed resistance during the crash, which is to be exp
 #### Big 10
 
 ## Model
+The model will be built with **ARIMA** (AutoRegressive Integrated Moving Average) model and will be tested on predicting the last 2 weeks of trading in 2020 with stock prices so far. The strategy is following:
+
+
+1. Split data for forward propagation testing
+    - predict last 2 weeks of trading in 2020, note only 8 days of trading due to end of the year. 
+2. Create a baseline model
+    - Linear Regression
+3. Calculate best ARIMA starting point
+    - Stationarity
+    - ACF and PACF
+4. Compare each model perforamnce
+    - RMSE
+5. Predict and compare model perforamnce
+
 ### Baseline
-Linear regression?
+A linear regression model was built as a baseline for comparing the model performance. As emphasized before, the COVID-19 crash added a lot of dynamic in stock price in 2020 and generalized model like linear regression performed poorly. It's prediction error (RMSE) was 134.3 which over 35% of the true values. 
+
+![linear_regresion](https://github.com/yunghanjeong/fitsnbits/blob/main/images/spy_linear_fit.png?raw=true)
 
 ### ARIMA
 
