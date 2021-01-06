@@ -261,13 +261,13 @@ class arima_tools():
                 ax[rows][cols].set_xticks(xticks)
                 ax[rows][cols].set_xticklabels(xlabels)
                 # add ax title
-                ax[rows][cols].set_title(axtitle)
+                ax[rows][cols].set_title(axtitle. size=20)
                 ax[rows][cols].legend(bbox_to_anchor=(0, -0.01, 1, -.05),
                                       loc="upper left",
                                       ncol=3,
                                       mode="expand")
     
-            fig.suptitle(f"{name} {year} Price Per Month", size=18, y=0.92)
+            fig.suptitle(f"{name} {year} Price Per Month", size=36, y=0.92)
         if len(savepath):
             plt.savefig(savepath)
         plt.show()

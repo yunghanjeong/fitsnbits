@@ -54,7 +54,6 @@ Moving average crossovers showed resistance during the crash, which is to be exp
 #### Moving Average and Monthly Breakdown
 ![monthlybreadkwon](https://github.com/yunghanjeong/fitsnbits/blob/main/images/SPY_2020_monthly.png?raw=true)
 
-#### Big 10
 
 ## Model
 The model will be built with **ARIMA** (AutoRegressive Integrated Moving Average) model and will be tested on predicting the last 2 weeks of trading in 2020 with stock prices so far. The strategy is following:
@@ -77,6 +76,16 @@ A linear regression model was built as a baseline for comparing the model perfor
 ![linear_regresion](https://github.com/yunghanjeong/fitsnbits/blob/main/images/spy_linear_fit.png?raw=true)
 
 ### ARIMA
+To prepare the ARIMA model for forecasting on our data few parameters must be caluclated and analyzed. First and foremost, the input data must be stationary for **AR** and **MA** models. The stationarity can be checked with Augmented Dickey-Fuller test.  Then, autocorrelation and partial autocorrelation functions (ACF andACF) can be utilized to calculated the **AR** and **MA** orders.
+
+#### Stationarity and ADF
+
+The dynamic nature of the current data set is a clear indication of non-stationarity within our data. ADF test on the data also fails reject the null hypothesis. However taking a difference of lag 1 shows stationarity. Visualization of difference at first lag also shows relative stationarity. 
+
+This indicates `d=1` for our ARIMA starting point.
+![stationarity_spy](https://github.com/yunghanjeong/fitsnbits/blob/main/images/spy_lag_1.png?raw=true)
+
+
 
 ### Error
 
