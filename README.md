@@ -36,20 +36,20 @@ S&P500 index is one of the known reliable investment that turns profit in consis
 
 Note the concentration of longer candlesticks (price ranges) during the crash period compared to recovery and growth that occur after the crash. 
 
-[!spy2020candlestick](https://github.com/yunghanjeong/fitsnbits/blob/main/images/spy_2020_candlestick.png?raw=true)
+![spy2020candlestick](https://github.com/yunghanjeong/fitsnbits/blob/main/images/spy_2020_candlestick.png?raw=true)
 
 #### Big 10
 Repeating the analysis above for S&P500 on the Big 10 stock mentioned above tells very similar story. All companies suffered unprecedent crash during COVID-19 market crash. Hoewever, most companies still managed to end the year with positive growth. Majority of the company saw stready recovery after the crash except for JNJ, which saw a very quick recovery. AAPL, AMZN, and GOOGL behaved very similarly to S&P500. JPM was the biggest outlier in both recovery and trend.
 
-[!aapl2020candlestick](https://github.com/yunghanjeong/fitsnbits/blob/main/images/aapl_2020_candlestick.png?raw=true)
+![aapl2020candlestick](https://github.com/yunghanjeong/fitsnbits/blob/main/images/aapl_2020_candlestick.png?raw=true)
 
-[!jpm2020candlestick](https://github.com/yunghanjeong/fitsnbits/blob/main/images/jpm_2020_candlestick.png?raw=true)
+![jpm2020candlestick](https://github.com/yunghanjeong/fitsnbits/blob/main/images/jpm_2020_candlestick.png?raw=true)
 
 
 Moving average crossovers showed resistance during the crash, which is to be expected. As S&P500 did, these companies crossovers started to signal suppport in recovering months after the crash. 
 
 #### Moving Average and Monthly Breakdown
-[!monthlybreadkwon](https://github.com/yunghanjeong/fitsnbits/blob/main/images/SPY_2020_monthly.png?raw=true)
+![monthlybreadkwon](https://github.com/yunghanjeong/fitsnbits/blob/main/images/SPY_2020_monthly.png?raw=true)
 
 #### Big 10
 
