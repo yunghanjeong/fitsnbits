@@ -82,9 +82,46 @@ To prepare the ARIMA model for forecasting on our data few parameters must be ca
 
 The dynamic nature of the current data set is a clear indication of non-stationarity within our data. ADF test on the data also fails reject the null hypothesis. However taking a difference of lag 1 shows stationarity. Visualization of difference at first lag also shows relative stationarity. 
 
-This indicates `d=1` for our ARIMA starting point.
+Most stocks data gather in project marked stationarity at `d=1` for ARIMA starting point.
+
 ![stationarity_spy](https://github.com/yunghanjeong/fitsnbits/blob/main/images/spy_lag_1.png?raw=true)
 
+#### ACF and PACF 
+
+Autocorrelation (ACF) and Partical Autocorrelation functions (PACF) are used to determine the order of **AR** and **MA** (p, q) in ARIMA model. Both functions check for level of significance each lag that contributes to the true value. ACF can provide significance in lag order for both **AR** and **MA** models. PACF are particularly useful in determining **AR** (p) order of the ARIMA model. 
+
+Visualized ACF and PACF of closing price and moving averages are below. In each price columns the ACF results indicates significant correlation in each lag indicating non-stationarity. PACF result for each price columns indicated that `p = 2` is a good candidate for the ARIMA model. 
+
+![acf_pacf_spy](https://github.com/yunghanjeong/fitsnbits/blob/main/images/SPY.acf_pacf.png?raw=true)
+
+#### Building ARIMA
+Fitting ARIMA models orders of (2, 1, 1) and (2, 1, 2) on `S&P500`resulted in much closer prediction in true value than linear regression. Given the importance of stationarity of ARIAM model the rolling averages should be predicted by ARIMA in similar fashion and most likely require the same ARIMA order.
+
+Overall, ARIMA of (2, 1, 1) performed best with: 
+- RMSE: 2.47
+- %RMSE: 0.0066
+- Model assumed steady, but in reality the stock increased
+    - decrease from most recent lag likely have large impact on prediction
+
+![arima_211_spy](https://github.com/yunghanjeong/fitsnbits/blob/main/images/spy_arima_211_pred.png?raw=true)
+
+ARIMA of (2, 1, 2) had a very close performance. 
+
+![arima_212_spy](https://github.com/yunghanjeong/fitsnbits/blob/main/images/spy_arima_212_pred.png?raw=true)
+
+###### Prediction on Moving Averages
+The model prediction was close to the real value, but failed capture the upward trend of real data. However, the market position potential still could be calculating by predicting the moving average with same logic and seeing their total comparitive behavior. 
+
+In summary:
+
+- ARIMA model perform very well in predicting moving average
+    - Support from utilzing average as data
+    - Very low RMSE
+- Crossover analysis for S&P500 indicates good buying position
+    - Indication for potential buy at 12-21 through 12-23 
+    - ~2% gain until end of year
+
+![arima_211_ma_spy](https://github.com/yunghanjeong/fitsnbits/blob/main/images/spy_MA_arima_pred.png?raw=true)  
 
 
 ### Error

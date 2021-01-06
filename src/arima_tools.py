@@ -138,7 +138,7 @@ class arima_tools():
                 break
         return i
         
-    def pacf_order(self, data, columns:list=["close"], nlags=20, plot=False):
+    def pacf_order(self, data, name, columns:list=["close"], nlags=20, plot=False):
         """
         This function returns a dataframe output_df with specified col and its moving averages per specified by days_list
         
@@ -173,7 +173,7 @@ class arima_tools():
                 lag_list.append(sig_lag)
         if plot:
             for col in columns:
-                plot_title = "ACF and PACF"
+                plot_title = "{} ACF and PACF".format(name)
                 fig, ax = plt.subplots(1,2, figsize=(12,8))
                 plot_acf(data[col].values, ax=ax[0], alpha=0.05);
                 plot_pacf(data[col], ax=ax[1], alpha=0.05);
