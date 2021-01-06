@@ -155,6 +155,8 @@ Overall, all prediction made in this project yielded good insights to market ent
 ├── fitsnbits_presentation.pdf          # PDF version of project presentation
 ├── src                                 # Contains custom python modules
 │   └── tda_api_tools.py                # Query tool for TD Ameritrade
+│   └── tda_plotly_tools.py             # For easy plotly based plots
+│   └── arima_tools.py                  # ARIMA based calculation library
 ├── images                              # All visualization and images of the project
 ├── notebooks                           # Noteboooks used to build the project
 │   └── tdameritrade_api.ipynb          # TD Ameritrade API Calls and data collection
