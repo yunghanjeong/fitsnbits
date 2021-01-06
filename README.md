@@ -1,20 +1,7 @@
 # FitsnBits
 ![banner](https://github.com/yunghanjeong/fitsnbits/blob/main/images/banner_fidelity.png?raw=true)
-Fitsnbits is a stock position potential indicator that provide insight to current stock behavior. By u
+Fitsnbits is a stock position potential indicator based on moving average crossover trading strategy. Any traders with access to [TD Ameritrade API](https://developer.tdameritrade.com/apis) can utilize this project to research a new position or update their current account standings. Moving average crossovers are the point when a stock price cross overs it's moving average prices which can provide strong signals to buy or sell. This project will predict daily closing and moving average prices of a given stock and calculate its crossover potential to assist market strategies. 
 
-1. it takes data from td ameritrade api
-2. it calculates bunch of stuff to determine arima
-3. it also calculates moving average
-4. predict closing and ma's with arima 
-5. see how closing price and ma trend are and see if they converge
-
-
-
-prediction model based on ARIMA based time series modeling based on [TD Ameritrade API](https://developer.tdameritrade.com/apis) data with [plotly](https://plotly.com/) visualization. Autogressive Integrated Moving Average, ARIMA, model was chosen for its quick statistical based model selection. 
-
-- why prediction is made with arima
-- advantages of arima
-- its performance
 
 ## Business Case
 A recent article by LPL Financial on [Websteronline](https://public.websteronline.com/articles/investments-insights/how-different-generations-invest) demonstrated the stark difference in new and young investors compared to established older generation. The young investors tends to rely on individual research intuition and invest with shorter goals in mind, but older investors relied on professional advisors and brokers to grow their portfolio. This investment pattern was also confirmed by [Wall Street Journal](https://www.wsj.com/articles/the-baby-boomer-vs-millennial-investment-smackdown-11559813581) where young investors are more likely to invest in emerging companies and IPOs to boos their porfolio. 
@@ -34,10 +21,35 @@ There is a clear market gap between providing a reliable and economical financia
 
 ## Data 
 ### EDA
-#### Stationarity
-[!]
+The collected data from TD Ameritrade API is very clean and free of null values as expected. The data has datetime index with open, close, high, and low prices along with its daily total trade volume. For this analysis only the close prices will be looked at since we assume that a trade strategy would be made in advance. 
+
+For the scope of this EDA the data will be narrowed to only include the trading days from year 2020. There are few highligts in doing so:
+
+- Easily identify seasonality between months
+    - Visual check of seasonality
+- Inclusion of COVID-19 crash 
+    
+### 2020 Performance
 
 #### S&P500
+S&P500 index is one of the known reliable investment that turns profit in consistent intervals. The year 2020 was similar even with the large COVID-19 Market crash highlighted below. The upward trend, minus the crash, indicates that linear regression might be a good fit for baseline analysis. 
+
+Note the concentration of longer candlesticks (price ranges) during the crash period compared to recovery and growth that occur after the crash. 
+
+[!spy2020candlestick](https://github.com/yunghanjeong/fitsnbits/blob/main/images/spy_2020_candlestick.png?raw=true)
+
+#### Big 10
+Repeating the analysis above for S&P500 on the Big 10 stock mentioned above tells very similar story. All companies suffered unprecedent crash during COVID-19 market crash. Hoewever, most companies still managed to end the year with positive growth. Majority of the company saw stready recovery after the crash except for JNJ, which saw a very quick recovery. AAPL, AMZN, and GOOGL behaved very similarly to S&P500. JPM was the biggest outlier in both recovery and trend.
+
+[!aapl2020candlestick](https://github.com/yunghanjeong/fitsnbits/blob/main/images/aapl_2020_candlestick.png?raw=true)
+
+[!jpm2020candlestick](https://github.com/yunghanjeong/fitsnbits/blob/main/images/jpm_2020_candlestick.png?raw=true)
+
+
+Moving average crossovers showed resistance during the crash, which is to be expected. As S&P500 did, these companies crossovers started to signal suppport in recovering months after the crash. 
+
+#### Moving Average and Monthly Breakdown
+[!monthlybreadkwon](https://github.com/yunghanjeong/fitsnbits/blob/main/images/SPY_2020_monthly.png?raw=true)
 
 #### Big 10
 
