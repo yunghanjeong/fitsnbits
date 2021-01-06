@@ -138,7 +138,7 @@ class arima_tools():
                 break
         return i
         
-    def pacf_order(self, data, name, columns:list=["close"], nlags=20, plot=False):
+    def pacf_order(self, data, name="", columns:list=["close"], nlags=20, plot=False):
         """
         This function returns a dataframe output_df with specified col and its moving averages per specified by days_list
         
@@ -261,7 +261,7 @@ class arima_tools():
                 ax[rows][cols].set_xticks(xticks)
                 ax[rows][cols].set_xticklabels(xlabels)
                 # add ax title
-                ax[rows][cols].set_title(axtitle. size=20)
+                ax[rows][cols].set_title(axtitle, size=20)
                 ax[rows][cols].legend(bbox_to_anchor=(0, -0.01, 1, -.05),
                                       loc="upper left",
                                       ncol=3,
@@ -276,7 +276,7 @@ class arima_tools():
     def rmse(self, true, input_series):
         return np.sqrt(mean_squared_error(true, input_series))
     
-    def crossovers(self, input_df):
+    def crossovers(self, input_df, columns=0):
         start_df = []
 
         for i in range(len(input_df)):
@@ -287,10 +287,10 @@ class arima_tools():
         
         start_df = pd.DataFrame(start_df)
         
-        start_df["indicator"] = start_df[0].apply(lambda x: True)
-        start_df["datetime"]= start_df[0]
+        start_df["indicator"] = start_df[columns].apply(lambda x: True)
+        start_df["datetime"]= start_df[columns]
         start_df.index = start_df.datetime
-        start_df.drop(columns=[0, "datetime"], inplace=True)
+        start_df.drop(columns=[columns, "datetime"], inplace=True)
         
         start_df = pd.concat([input_df, start_df], axis=1)
         return start_df

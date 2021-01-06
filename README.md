@@ -123,50 +123,31 @@ In summary:
 
 ![arima_211_ma_spy](https://github.com/yunghanjeong/fitsnbits/blob/main/images/spy_MA_arima_pred.png?raw=true)  
 
-
-### Error
-
 ## Results
-<!---
-1. Historic stock quotes were collected from selected companies through TD Ameritrade API between 2018-2020, exclusing the COVID-19 market crash.
-2. The collected data was cleaned and stored as CSV using pandas and datetime libraries.
-3. Autocorrelation and Partial Autocorelation (ACF and PACF) of individual stocks were calculated for base AR order of ARIMA.
-4. GridSearch was performed on rest of ARIMA orders (I and MA) to find the orders that provided the least amount of error based on RMSE.
-5. The optimal ARIMA orders were used to predict on daily prices on weekly ranges (5 days) with 25 days of data.
-6. Overall RMSE was found for prediction evaluation.
 
-## ARIMA Model Selection (ACF and PACF)
-ACF and PACF of all selected stocks demonstrated very similar results where the ACF has steady drop over the lags and PACF having sharp drop after lag 2. This provides a starting point of the ARIMA model at AR order of 2. 
+Extending the method above to all other stock analysis resulted in ARIMA order in favor of (2, 1, 1). It was found that (2, 0, 0) was best fit for Johnson and Johnson and (2, 1, 0) was best firt for JPMorgan Chase and Visa, which was also affirms the behavioral difference noticed in visual exploreration. In predicting with moving average the prediction on JNJ, GOOGL, GOOG, and JPM were more accurate. 
 
-![s&p500](https://github.com/yunghanjeong/fitsnbits/blob/main/images/SPY.acf_pacf.png?raw=true)
+JNJ prediction showed merging potential between price prediction and moving average, which indicates upcoming crossover points. Choosing to invest in this period in JNJ would result in profit. 
 
-Based on the starting point of AR(2), the rest of ARIMA orders were determined by gridsearch with RMSE as the metric. The order of I was limited to the max AR order minus 1 (1) and the order of MA was limited to the maximum order of AR (2). The gridsearch resulted in most models with ARIMA order of (2, 1, 1) with JPM ARIMA order of (2, 0, 2) and GOOGL ARIMA order fo (2, 0, 1).
+![arima_211_ma_jnj](https://github.com/yunghanjeong/fitsnbits/blob/main/images/JNJ_MA_arima_pred.png?raw=true)  
 
-## Results
-Overall, all models predicted daily closing prices accurately with %RMSE ranging from 1.5-3% of respective stock prices. Below are the three best performing models, which are S&P500, JPMorgan Chase, and VISA. 
-
-### BEST
-![s&p500](https://github.com/yunghanjeong/fitsnbits/blob/main/images/V_prediction.png?raw=true)
-![JPM](https://github.com/yunghanjeong/fitsnbits/blob/main/images/JPM_prediction.png?raw=true)
-![VISA](https://github.com/yunghanjeong/fitsnbits/blob/main/images/SPY_prediction.png?raw=true)
-
-However, there was some irregularities that significantly impacted this model. On Google class C stock (GOOG) the prediction overshot steep climbs and drops resulting in significant jumps in peaks and valleys. Johnson and Johnson (JNJ) behaved similarly with very promiment jumps between the peaks and the valleys of daily prices. 
-
-### WORST
-![GOOG](https://github.com/yunghanjeong/fitsnbits/blob/main/images/GOOG_prediction.png?raw=true)
-![JNJ](https://github.com/yunghanjeong/fitsnbits/blob/main/images/JNJ_prediction.png?raw=true)
 
 ## Conclusion
-Overall, all prediction made in this project yielded more than satisfactory results with all models performing very accurately in the long run. Further work is necessary to stabilize the models sudden drops, especially the inclusion of flash crash due to COVID-19 breakout. This can be tacked by inclusion of seasonality and exogenous variable (SARIMAX) and custom regression model built on neural net with RNN or LSTM layers for inclusion of model "memories".
+Overall, all prediction made in this project yielded good insights to market entrance using ARIMA to predict moving average crossover points in S&P500 and its top 10 stocks. Trading year 2020 had market movements, especially with COVID-19 crash, which makes modeling based on this time period very different. Traditional linear regression was demonstrated early on how poor it can be in predicting wiht overall data due to its sensitivity with outliers. Utilizing ARIMA method seeks to avoid issues by relying prediction on lag based observation. The ARIMA method was proven effective with:
 
-## Future Works
+- Fast calculation and implementation
+- Low RMSE
+- Statistical test based order selection
 
-- Create more stable model through inclusion of seasonality and exogenous variable (SARIMAX)
-- Develop custom regression model through neural net
+### Future Works
+
+- Create Ensemble with regression and ARIMA
+- forward propagate in smaller resolution
 - Streamline process for less end-user programming
 - Deploy application or library of final model for ease of use
-- Stabilize the model and include COVID-19 crash. 
---->
+- Deploy plotly tools for dashboard building
+
+
 ## Repository Structure
 ```
 ├── README.md                           # Top-level README
